@@ -21,7 +21,9 @@
     "express-async-handler": "^1.2.0",
     "jsonwebtoken": "^9.0.0",
     "mongodb": "^5.1.0",
-    "mongoose": "^7.0.2"
+    "mongoose": "^7.0.2",
+    "webpack": "^5.76.3",
+    "webpack-cli": "3.3.12"
   },
   "devDependencies": {
     "nodemon": "^2.0.22"
