@@ -5,6 +5,9 @@ import axios from 'axios';
 import {useState} from 'react'
 import {toast} from 'react-toastify'
 
+import {useSelector, useDispatch} from 'react-redux'
+import {signIn} from '../features/auth/authSlice'
+
 import Header from '../partials/Header';
 import Banner from '../partials/Banner';
 
@@ -17,6 +20,10 @@ function SignIn() {
 
   const {name, email, password, password2} = formData
 
+  const dispatch = useDispatch()
+
+  const {user, isLoading, isSuccess, message} = useSelector(state => state.auth)
+
   const onChange = (e) => {
     setFormData((prevState ) => ({
       ...prevState,
@@ -25,6 +32,14 @@ function SignIn() {
   }
 
   const onSubmit = (e) => {
+    e.preventDefault()
+
+    const userData = {
+      email,
+      password
+    }
+
+    dispatch(signIn(userData))
   }
   
   return (
