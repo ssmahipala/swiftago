@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import {signOut, reset} from '../features/auth/authSlice'
+import logo from '../images/Swiftago-logo.png'
 
 function Header() {
-
   const [top, setTop] = useState(true);
 
   // detect whether user has scrolled the page down by 10px 
@@ -14,6 +16,16 @@ function Header() {
     return () => window.removeEventListener('scroll', scrollHandler);
   }, [top]);  
 
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const {user} = useSelector((state) => state.auth)
+
+  const onSignout = () => {
+    dispatch(signOut())
+    dispatch(reset())
+    navigate('/')
+  }
+
   return (
     <header className={`fixed w-full z-30 md:bg-opacity-90 transition duration-300 ease-in-out ${!top && 'bg-white backdrop-blur-sm shadow-lg'}`}>
       <div className="max-w-6xl mx-auto px-5 sm:px-6">
@@ -23,22 +35,19 @@ function Header() {
           <div className="flex-shrink-0 mr-4">
             {/* Logo */}
             <Link to="/" className="block" aria-label="Cruip">
-              <svg className="w-8 h-8" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-                <defs>
-                  <radialGradient cx="21.152%" cy="86.063%" fx="21.152%" fy="86.063%" r="79.941%" id="header-logo">
-                    <stop stopColor="#4FD1C5" offset="0%" />
-                    <stop stopColor="#81E6D9" offset="25.871%" />
-                    <stop stopColor="#338CF5" offset="100%" />
-                  </radialGradient>
-                </defs>
-                <rect width="32" height="32" rx="16" fill="url(#header-logo)" fillRule="nonzero" />
-              </svg>
+              <img src={logo} width={250} height={300} />
             </Link>
           </div>
 
           {/* Site navigation */}
           <nav className="flex flex-grow">
-            <ul className="flex flex-grow justify-end flex-wrap items-center">
+          <ul className="flex flex-grow justify-end flex-wrap items-center">
+            {user ? (
+              <li>
+              <Link to='/signout' className="font-medium text-gray-600 hover:text-gray-900 px-5 py-3 flex items-center transition duration-150 ease-in-out" onClick = {onSignout}>Sign out</Link>
+            </li>
+            ) : (
+              <>
               <li>
                 <Link to="/signin" className="font-medium text-gray-600 hover:text-gray-900 px-5 py-3 flex items-center transition duration-150 ease-in-out">Sign in</Link>
               </li>
@@ -50,8 +59,10 @@ function Header() {
                   </svg>                  
                 </Link>
               </li>
-            </ul>
+            </>
 
+            )}
+          </ul>  
           </nav>
 
         </div>

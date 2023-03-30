@@ -1,12 +1,11 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import axios from 'axios';
+import { Link, useNavigate } from 'react-router-dom';
 
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 import {toast} from 'react-toastify'
 
 import {useSelector, useDispatch} from 'react-redux'
-import {signIn} from '../features/auth/authSlice'
+import {signIn, reset} from '../features/auth/authSlice'
 
 import Header from '../partials/Header';
 import Banner from '../partials/Banner';
@@ -21,8 +20,22 @@ function SignIn() {
   const {name, email, password, password2} = formData
 
   const dispatch = useDispatch()
+  const navigate = useNavigate()
 
-  const {user, isLoading, isSuccess, message} = useSelector(state => state.auth)
+  const {user, isLoading, isError, isSuccess, message} = useSelector(state => state.auth)
+
+  useEffect(() => {
+    if(isError) {
+      toast.error(message)
+    }
+
+    //Redirect When signed in
+    if(isSuccess || user) {
+      navigate('/')
+    }
+
+    dispatch(reset())
+  }, [isError, isSuccess, user, isLoading, message, navigate, dispatch])
 
   const onChange = (e) => {
     setFormData((prevState ) => ({
