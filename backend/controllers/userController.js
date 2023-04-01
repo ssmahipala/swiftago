@@ -88,8 +88,43 @@ const generateToken = (id) => {
     })
 }
 
+//Update current user
+//@route /api/users/update
+//@access Private
+
+const updateUser = asyncHandler(async (req, res) => {
+    const { id, name, email, password } = req.body;
+  
+    // Check if user exists
+    const user = await User.findById(id);
+    if (!user) {
+      res.status(404);
+      throw new Error('User not found');
+    }
+  
+    // Update user information
+    user.name = name || user.name;
+    user.email = email || user.email;
+    if (password) {
+      const salt = await bcrypt.genSalt(10);
+      user.password = await bcrypt.hash(password, salt);
+    }
+  
+    // Save updated user to database
+    const updatedUser = await user.save();
+
+    res.status(200).json({
+      _id: updatedUser._id,
+      name: updatedUser.name,
+      email: updatedUser.email,
+      token: generateToken(updatedUser._id),
+    });
+    console.log("User Updated")
+});
+
 module.exports = {
     registerUser,
     loginUser,
     welcome,
+    updateUser,
 }
