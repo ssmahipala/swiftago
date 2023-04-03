@@ -31,7 +31,7 @@ function SignIn() {
 
     //Redirect When signed in
     if(isSuccess || user) {
-      navigate('/')
+      navigate('/projects')
     }
 
     dispatch(reset())

@@ -81,12 +81,7 @@ const welcome = asyncHandler(async (req,res) => {
     res.send('Welcome')
 })
 
-//Generate Token
-const generateToken = (id) => {
-    return jwt.sign({id}, process.env.JWT_SECRET, {
-        expiresIn: '30d',
-    })
-}
+
 
 //Update current user
 //@route /api/users/update
@@ -96,7 +91,7 @@ const updateUser = asyncHandler(async (req, res) => {
     const { id, name, email, password } = req.body;
   
     // Check if user exists
-    const user = await User.findById(id);
+    const user = await User.findOne(id);
     if (!user) {
       res.status(404);
       throw new Error('User not found');
@@ -121,6 +116,13 @@ const updateUser = asyncHandler(async (req, res) => {
     });
     console.log("User Updated")
 });
+
+//Generate Token
+const generateToken = (id) => {
+    return jwt.sign({id}, process.env.JWT_SECRET, {
+        expiresIn: '30d',
+    })
+}
 
 module.exports = {
     registerUser,

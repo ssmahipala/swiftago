@@ -20,10 +20,19 @@ function Header() {
   const dispatch = useDispatch()
   const {user} = useSelector((state) => state.auth)
 
+  const onUser = () => {
+    dispatch(userProfile())
+    navigate('/user-profile')
+  }
+
+  const onProjects = () => {
+    dispatch(projects())
+    navigate('/projects')
+  }
+
   const onSignout = () => {
     dispatch(signOut())
     dispatch(reset())
-    navigate('/')
   }
 
   return (
@@ -43,9 +52,17 @@ function Header() {
           <nav className="flex flex-grow">
           <ul className="flex flex-grow justify-end flex-wrap items-center">
             {user ? (
-              <li>
-              <Link to='/signout' className="font-medium text-gray-600 hover:text-gray-900 px-5 py-3 flex items-center transition duration-150 ease-in-out" onClick = {onSignout}>Sign out</Link>
-            </li>
+              <>
+                <li>
+                  <Link to='/user-profile' className="font-medium text-gray-600 hover:text-gray-900 px-5 py-3 flex items-center transition duration-150 ease-in-out" onClick = {onUser}>{user.name}</Link>
+                </li>
+                <li>
+                  <Link to='/projects' className="font-medium text-gray-600 hover:text-gray-900 px-5 py-3 flex items-center transition duration-150 ease-in-out" onClick = {onProjects}>My Projects</Link>
+                </li>
+                <li>
+                  <Link to='/signout' className="font-medium text-gray-600 hover:text-gray-900 px-5 py-3 flex items-center transition duration-150 ease-in-out" onClick = {onSignout}>Sign out</Link>
+                </li>
+              </>
             ) : (
               <>
               <li>

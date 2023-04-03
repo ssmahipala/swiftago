@@ -18,6 +18,9 @@ import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 import SignOut from './pages/SignOut';
 import ResetPassword from './pages/ResetPassword';
+import UserProfile from './pages/UserProfile';
+import Projects from './pages/Projects';
+import PrivateRoute from './partials/PrivateRoute';
 
 function App() {
 
@@ -46,6 +49,12 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/signout" element={<SignOut />} />
         <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="/user-profile" element={<PrivateRoute />} >
+          <Route path="/user-profile" element={<UserProfile />} />
+        </Route>         
+        <Route path="/projects" element={<PrivateRoute />} >
+          <Route path='/projects' element={<Projects />} />
+        </Route>
       </Routes>
       <ToastContainer />
     </>
