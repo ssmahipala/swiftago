@@ -26,27 +26,32 @@ const signIn =async(userData) => {
 
 // Update user
 const updateUser = async (userData) => {
-    const user = JSON.parse(localStorage.getItem('user'))
-  
-    if (!user) {
-      throw new Error('User not authenticated')
-    }
-  
-    const { token } = user
-    const headers = {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    }
-  
-    const response = await axios.patch(API_URL + '/update', userData, {
-      headers,
-    })
-  
-    if (response.data) {
-      localStorage.setItem('user', JSON.stringify(response.data))
-    }
-    return response.data
+  const user = JSON.parse(localStorage.getItem('user'))
+
+  if (!user) {
+    throw new Error('User not authenticated')
   }
+  
+  const { token, _id } = user
+  const headers = {
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${token}`,
+  }
+  
+  const userDataWithId = {
+    ...userData,
+    _id,
+  }
+  
+  const response = await axios.patch(API_URL + '/update', userDataWithId, {
+    headers,
+  })
+  
+  if (response.data) {
+    localStorage.setItem('user', JSON.stringify(response.data))
+  }
+  return response.data
+}
 //Logout user
 const signOut = () => localStorage.removeItem('user')
 

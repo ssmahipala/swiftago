@@ -47,4 +47,4 @@ const userSchema = mongoose.Schema({
 const User = mongoose.model('User', userSchema);
 const Project = mongoose.model('Project', projectSchema);
 
-module.exports = { User, Project };
+module.exports = {User, Project};

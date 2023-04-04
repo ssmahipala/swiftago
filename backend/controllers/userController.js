@@ -88,13 +88,13 @@ const welcome = asyncHandler(async (req,res) => {
 //@access Private
 
 const updateUser = asyncHandler(async (req, res) => {
-    const { id, name, email, password } = req.body;
+    const { _id, name, email, password } = req.body;
   
     // Check if user exists
-    const user = await User.findOne(id);
+    const user = await User.findById(_id);
     if (!user) {
       res.status(404);
-      throw new Error('User not found');
+      throw new Error('Gotcha!!!!');
     }
   
     // Update user information
