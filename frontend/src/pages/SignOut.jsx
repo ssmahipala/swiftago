@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Header from '../partials/Header';
+import Footer from '../partials/Footer';
 
 function SignOut() {
 
@@ -40,7 +41,10 @@ function SignOut() {
         </div>
 
       </div>
+            {/*  Site footer */}
+            <Footer />
     </section>
+    
   );
 }
 

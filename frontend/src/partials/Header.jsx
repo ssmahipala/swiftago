@@ -44,7 +44,7 @@ function Header() {
           <div className="flex-shrink-0 mr-4">
             {/* Logo */}
             <Link to="/" className="block" aria-label="Cruip">
-              <img src={logo} width={250} height={300} />
+              <img src={logo} width={100} height={100} />
             </Link>
           </div>
 
@@ -54,7 +54,7 @@ function Header() {
             {user ? (
               <>
                 <li>
-                  <Link to='/user-profile' className="font-medium text-gray-600 hover:text-gray-900 px-5 py-3 flex items-center transition duration-150 ease-in-out" onClick = {onUser}>{user.name}</Link>
+                  <Link to='/user-profile' className="font-medium text-gray-600 hover:text-gray-900 px-5 py-3 flex items-center transition duration-150 ease-in-out" onClick = {onUser}>Hello, {user.name}</Link>
                 </li>
                 <li>
                   <Link to='/projects' className="font-medium text-gray-600 hover:text-gray-900 px-5 py-3 flex items-center transition duration-150 ease-in-out" onClick = {onProjects}>My Projects</Link>
