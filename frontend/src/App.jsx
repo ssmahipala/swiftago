@@ -21,6 +21,7 @@ import ResetPassword from './pages/ResetPassword';
 import UserProfile from './pages/UserProfile';
 import Projects from './pages/Projects';
 import PrivateRoute from './partials/PrivateRoute';
+import ProjectDetails from './partials/Projects/ProjectDetails';
 
 function App() {
 
@@ -54,6 +55,9 @@ function App() {
         </Route>         
         <Route path="/projects" element={<PrivateRoute />} >
           <Route path='/projects' element={<Projects />} />
+        </Route>
+        <Route path="/projects/:projectId" element={<PrivateRoute />} >
+          <Route path="/projects/:projectId" element={<ProjectDetails />} />
         </Route>
       </Routes>
       <ToastContainer />

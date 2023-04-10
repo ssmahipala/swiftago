@@ -16,9 +16,19 @@ const projectService = {
       Authorization: `Bearer ${token}`,
     };
 
-    const response = await axios.post(API_URL + '/new-project', projectData, {
+    const { name, description } = projectData;
+    const createdBy = user._id;
+
+    const response = await axios.post(API_URL + '/new-project', {name, description, createdBy }, {
       headers,
     });
+
+    if(response.data) {
+      localStorage.setItem('newproject', JSON.stringify
+      (response.data));
+      const newProjectId = response.data._id;
+      console.log(response)
+  }
 
     return response.data;
   },
@@ -42,45 +52,48 @@ const projectService = {
     return response.data;
   },
 
-//   updateProject: async (projectId, projectData) => {
-//     const user = JSON.parse(localStorage.getItem('user'));
+  updateProject: async (projectId, projectData) => {
+    const user = JSON.parse(localStorage.getItem('user'));
 
-//     if (!user) {
-//       throw new Error('User not authenticated');
-//     }
+    if (!user) {
+      throw new Error('User not authenticated');
+    }
 
-//     const { token } = user;
-//     const headers = {
-//       'Content-Type': 'application/json',
-//       Authorization: `Bearer ${token}`,
-//     };
+    const { token } = user;
+    const headers = {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    };
 
-//     const response = await axios.patch(`${API_URL}/${projectId}`, projectData, {
-//       headers,
-//     });
+    const response = await axios.patch(`${API_URL}/${projectId}`, projectData, {
+      headers,
+    });
 
-//     return response.data;
-//   },
+    return response.data;
+  },
 
-//   deleteProject: async (projectId) => {
-//     const user = JSON.parse(localStorage.getItem('user'));
+  deleteProject: async (projectId) => {
+    const user = JSON.parse(localStorage.getItem('user'));
 
-//     if (!user) {
-//       throw new Error('User not authenticated');
-//     }
+    if (!user) {
+      throw new Error('User not authenticated');
+    }
 
-//     const { token } = user;
-//     const headers = {
-//       'Content-Type': 'application/json',
-//       Authorization: `Bearer ${token}`,
-//     };
+    const { token } = user;
+    const headers = {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    };
 
-//     const response = await axios.delete(`${API_URL}/${projectId}`, {
-//       headers,
-//     });
+    const response = await axios.delete(`${API_URL}/delete-project`, {
+      headers,
+      data: {
+        _id: projectId,
+      },
+    });
 
-//     return response.data;
-//   },
+    return response.data;
+  },
 };
 
 export default projectService;
