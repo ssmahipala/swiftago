@@ -7,18 +7,21 @@ import { useNavigate } from 'react-router-dom';
 function NewProjectForm(props) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  
 
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
-    const newProject = {name, description};
-    dispatch(createProject(newProject));
+    const newProject = { name, description };
 
-  }
+    try {
+      dispatch(createProject(newProject));
+      navigate(`/projects`);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <div className="fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center">
